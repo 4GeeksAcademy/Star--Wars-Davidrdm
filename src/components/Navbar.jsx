@@ -1,19 +1,32 @@
+import React from "react";
 import { Link } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
-export const Navbar = () => {
+function Navbar() {
+  const {store,dispatch}= useGlobalReducer()
+  return (
+    <nav className="navbar navbar-dark bg-dark px-4">
+      <Link to="/" className="navbar-brand">🌌 Star Wars</Link>
+      <div className="dropdown">
+        <button className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+          ⭐ Favoritos ({store.favorites.length})
+        </button>
+        <ul className="dropdown-menu dropdown-menu-end">
+          {store.favorites.length === 0 ? (
+            <li className="dropdown-item">No hay favoritos</li>
+          ) : (
+            store.itemfavorites.map((item, idx) => (
+              <li key={idx}>
+                <Link className="dropdown-item" to={`/${item.type}/${item.uid}`}>
+                  {item.name}
+                </Link>
+              </li>
+            ))
+          )}
+        </ul>
+      </div>
+    </nav>
+  );
+}
 
-	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
-				</div>
-			</div>
-		</nav>
-	);
-};
+export default Navbar;
