@@ -53,10 +53,10 @@ function Card({ item, type }) {
   };
 
   return (
-    <div className="card m-2" style={{ minWidth: "250px" }}>
-      <div className="card-body">
+    <div className="card m-2 h-100"> 
+      <div className="card-body d-flex flex-column justify-content-between">
         <img
-          className="img-fluid mb-2"
+          className="img-fluid mb-2 rounded"
           alt={item.name}
           src={imageUrl}
           onError={(e) =>
