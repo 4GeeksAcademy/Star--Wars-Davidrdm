@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 function Detail() {
   const { type, uid } = useParams();
@@ -7,7 +7,7 @@ function Detail() {
 
   // Definimos las rutas de imágenes según el tipo
   const imagePaths = {
-    characters: "characters",
+    people: "characters",
     planets: "planets",
     vehicles: "vehicles",
   };
@@ -29,8 +29,10 @@ function Detail() {
 
   return (
     <div className="container mt-4">
+      <Link to="/" className="btn btn-secondary mb-4">
+        ⬅ Volver al listado
+      </Link>
       <div className="row">
-        {/* Imagen */}
         <div className="col-md-6">
           <img
             src={imageUrl}
@@ -42,23 +44,37 @@ function Detail() {
             }
           />
         </div>
-
-        {/* Información */}
         <div className="col-md-6">
           <h2 className="mb-4">{detail.properties.name}</h2>
           <ul className="list-group">
-            {Object.entries(detail.properties).map(([key, value]) => (
-              <li key={key} className="list-group-item">
-                <strong>{key.replace("_", " ").toUpperCase()}:</strong> {value}
-              </li>
-            ))}
+            {type === "people" && (
+              <>
+                <li className="list-group-item"><strong>Altura:</strong> {detail.properties.height}</li>
+                <li className="list-group-item"><strong>Género:</strong> {detail.properties.gender}</li>
+                <li className="list-group-item"><strong>Color de ojos:</strong> {detail.properties.eye_color}</li>
+                <li className="list-group-item"><strong>Año de nacimiento:</strong> {detail.properties.birth_year}</li>
+              </>
+            )}
+            {type === "planets" && (
+              <>
+                <li className="list-group-item"><strong>Clima:</strong> {detail.properties.climate}</li>
+                <li className="list-group-item"><strong>Gravedad:</strong> {detail.properties.gravity}</li>
+                <li className="list-group-item"><strong>Terreno:</strong> {detail.properties.terrain}</li>
+                <li className="list-group-item"><strong>Población:</strong> {detail.properties.population}</li>
+              </>
+            )}
+            {type === "vehicles" && (
+              <>
+                <li className="list-group-item"><strong>Modelo:</strong> {detail.properties.model}</li>
+                <li className="list-group-item"><strong>Fabricante:</strong> {detail.properties.manufacturer}</li>
+                <li className="list-group-item"><strong>Capacidad:</strong> {detail.properties.passengers}</li>
+                <li className="list-group-item"><strong>Velocidad:</strong> {detail.properties.max_atmosphering_speed}</li>
+              </>
+            )}
           </ul>
         </div>
       </div>
     </div>
   );
 }
-
 export default Detail;
-
-

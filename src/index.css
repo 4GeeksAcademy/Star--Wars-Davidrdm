@@ -1,0 +1,12 @@
+.expand-container {
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    max-height: 0;
+    opacity: 0;
+  }
+  
+  .expand-container.expanded {
+    max-height: 500px; /* suficiente para 3 datos */
+    opacity: 1;
+  }
+  

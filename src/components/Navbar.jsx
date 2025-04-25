@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { removeFavorite } from "./Favoritos";
+
 
 function Navbar() {
   const { store, dispatch } = useGlobalReducer();
@@ -14,18 +16,28 @@ function Navbar() {
           ⭐ Favoritos ({favorites.length})
         </button>
         <ul className="dropdown-menu dropdown-menu-end">
-          {favorites.length === 0 ? (
-            <li className="dropdown-item">No hay favoritos</li>
-          ) : (
-            favorites.map((item, idx) => (
-              <li key={idx}>
-                <Link className="dropdown-item" to={`/${item.type}/${item.uid}`}>
-                  {item.name}
-                </Link>
-              </li>
-            ))
-          )}
-        </ul>
+  {favorites.length === 0 ? (
+    <li className="dropdown-item">No hay favoritos</li>
+  ) : (
+    favorites.map((item, idx) => (
+      <li key={idx} className="dropdown-item d-flex justify-content-between align-items-center">
+        <Link
+          to={`/${item.type}/${item.uid}`}
+          className="text-decoration-none text-dark me-2"
+        >
+          {item.name}
+        </Link>
+        <button
+          className="btn btn-sm btn-outline-danger"
+          onClick={() => removeFavorite(item, dispatch)} 
+        >
+          ✖
+        </button>
+      </li>
+    ))
+  )}
+</ul>
+
       </div>
     </nav>
   );
